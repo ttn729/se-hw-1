@@ -71,15 +71,39 @@ $(function () {
     event.preventDefault();
 
     var createInput = $("#create-input");
-    //TODO: creat a tweet
+    //TODO: create a tweet
   });
 
   //Create searched tweets
   $("#search-form").on("submit", function (event) {
     event.preventDefault();
-    var userID = $("#search-input");
+    var userID = $("#search-input").val();
 
     //TODO: search a tweet and display it.
+    $.ajax({
+      url: "/searchinfo/" + userID,
+      contentType: "application/json",
+      success: function (response) {
+        var tbodyEl = $("#searchbody");
+
+        tbodyEl.html("");
+        tbodyEl.append(
+          '\
+            <tr>\
+              <td class="id">' +
+            response.id +
+            "</td>\
+              <td>" +
+            response.text +
+            "</td>\
+              <td>" +
+            response.created_at +
+            "</td>\
+            </tr>\
+          "
+        );
+      },
+    });
   });
 
   //UPDATE/PUT

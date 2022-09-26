@@ -17,7 +17,6 @@ fs.readFile("favs.json", "utf8", function readFileCallback(err, data) {
     req.log.info("cannot load a file:" + fileFolder + "/" + _file_name);
     throw err;
   } else {
-    //TODO: store loaded data into a global variable for tweet data
     tweetinfo = JSON.parse(data);
   }
 });
@@ -31,13 +30,20 @@ app.get("/tweets", function (req, res) {
 
 //Shows tweet info
 app.get("/tweetinfo", function (req, res) {
-  //TODO: send tweet info
   res.send(tweetinfo);
 });
 
 //Shows searched tweets
-app.get("/searchinfo", function (req, res) {
-  //TODO: send searched tweets
+app.get("/searchinfo/:tweetid", function (req, res) {
+  const tweetid = req.params.tweetid;
+
+  tweetinfo.forEach(function (element, index) {
+    if (element.id === Number(tweetid)) {
+      res.send(element);
+    }
+  });
+
+  res.send("Succesfully changed screen name.");
 });
 
 //Post functions
