@@ -32,7 +32,6 @@ $(function () {
 
   //Get tweets
   $("#get-tweets-button").on("click", function () {
-    //TODO: get tweet info and display it
     $.ajax({
       url: "/tweetinfo",
       contentType: "application/json",
@@ -95,6 +94,15 @@ $(function () {
     var newName = parsedStrings[1];
 
     //TODO: update a tweet
+    $.ajax({
+      url: "tweets/" + name + ";" + newName,
+      method: "PUT",
+      contentType: "application/json",
+      success: function (response) {
+        console.log(response);
+        $("#get-button").trigger("click");
+      },
+    });
   });
 
   //DELETE
@@ -102,7 +110,6 @@ $(function () {
     event.preventDefault();
     var id = $("#delete-input").val();
 
-    //TODO: delete a tweet
     $.ajax({
       url: "/tweetinfo/" + id,
       method: "DELETE",

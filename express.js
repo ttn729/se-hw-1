@@ -53,7 +53,18 @@ app.post("/searchinfo", function (req, res) {
 
 //Update
 app.put("/tweets/:nm", function (req, res) {
-  //TODO: update tweets
+  const parsedStrings = req.params.nm.split(";");
+
+  var name = parsedStrings[0];
+  var newName = parsedStrings[1];
+
+  tweetinfo.forEach(function (element, index) {
+    if (element.user.name === name) {
+      element.user.screen_name = newName;
+    }
+  });
+
+  res.send("Succesfully changed screen name.");
 });
 
 //Delete
@@ -66,7 +77,7 @@ app.delete("/tweetinfo/:tweetid", function (req, res) {
     }
   });
 
-  res.send("Succesfully deleted tweet");
+  res.send("Succesfully deleted tweet.");
 });
 
 app.listen(PORT, function () {
