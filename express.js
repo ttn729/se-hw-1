@@ -25,7 +25,7 @@ fs.readFile("favs.json", "utf8", function readFileCallback(err, data) {
 //Get functions
 //Shows user info
 app.get("/tweets", function (req, res) {
-  //TODO: send all users' IDs
+  //send all users' IDs
   res.send(tweetinfo);
 });
 
@@ -52,7 +52,8 @@ app.get("/searchinfo/:tweetid", function (req, res) {
 //Post functions
 //Posts created tweets
 app.post("/tweetinfo", function (req, res) {
-  //TODO: create a tweet.
+  tweetinfo.push(req.body);
+  res.send("Successfully created tweet!");
 });
 
 //Posts searched tweets

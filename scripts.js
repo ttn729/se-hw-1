@@ -98,7 +98,37 @@ $(function () {
     event.preventDefault();
 
     var createInput = $("#create-input");
-    //TODO: create a tweet
+
+    // create a tweet
+    var inputString = createInput.val();
+    const parsedStrings = inputString.split(";");
+
+    var tweetID = Number(parsedStrings[0]);
+    var tweetText = parsedStrings[1];
+
+    var d = new Date();
+    const date = d.toDateString().split(" ");
+
+    $.ajax({
+      url: "/tweetinfo",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        id: tweetID,
+        text: tweetText,
+        created_at:
+          date.slice(0, date.length - 1).join(" ") +
+          " " +
+          d.toLocaleTimeString("en-US", { hour12: false }) +
+          " +0000 " +
+          date[date.length - 1],
+      }),
+      success: function (response) {
+        var tbodyEl = $("#tweettable");
+        $("#create-input").val("");
+        $("#get-tweets-button").trigger("click");
+      },
+    });
   });
 
   //Create searched tweets
@@ -106,12 +136,14 @@ $(function () {
     event.preventDefault();
     var userID = $("#search-input").val();
 
-    //TODO: search a tweet and display it.
+    // search a tweet and display it.
     $.ajax({
       url: "/searchinfo/" + userID,
       contentType: "application/json",
       success: function (response) {
         var tbodyEl = $("#searchbody");
+
+        $("#search-input").val("");
 
         tbodyEl.html("");
         tbodyEl.append(
@@ -144,14 +176,14 @@ $(function () {
     var name = parsedStrings[0];
     var newName = parsedStrings[1];
 
-    //TODO: update a tweet
+    // update a tweet
     $.ajax({
       url: "tweets/" + name + ";" + newName,
       method: "PUT",
       contentType: "application/json",
       success: function (response) {
-        console.log(response);
         $("#get-button").trigger("click");
+        $("#update-input").value("");
       },
     });
   });
@@ -166,7 +198,7 @@ $(function () {
       method: "DELETE",
       contentType: "application/json",
       success: function (response) {
-        console.log(response);
+        $("#delete-input").val("");
         $("#get-tweets-button").trigger("click");
       },
     });
