@@ -63,7 +63,34 @@ $(function () {
 
   //Get searched tweets
   $("#get-searched-tweets").on("click", function () {
-    //TODO: get a searched tweet(s) & display it
+    $.ajax({
+      url: "/searchinfo",
+      method: "POST",
+      contentType: "application/json",
+      success: function (response) {
+        var tbodyEl = $("#searchbody");
+
+        tbodyEl.html("");
+
+        response.forEach((element) => {
+          tbodyEl.append(
+            '\
+            <tr>\
+              <td class="id">' +
+              element.id +
+              "</td>\
+              <td>" +
+              element.text +
+              "</td>\
+              <td>" +
+              element.created_at +
+              "</td>\
+            </tr>\
+          "
+          );
+        });
+      },
+    });
   });
 
   //CREATE

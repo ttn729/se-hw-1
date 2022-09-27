@@ -10,6 +10,7 @@ var fs = require("fs");
 
 //global variable for tweet data
 var tweetinfo = [];
+var searchIDs = [];
 
 //load the input file
 fs.readFile("favs.json", "utf8", function readFileCallback(err, data) {
@@ -37,6 +38,8 @@ app.get("/tweetinfo", function (req, res) {
 app.get("/searchinfo/:tweetid", function (req, res) {
   const tweetid = req.params.tweetid;
 
+  searchIDs.push(tweetid);
+
   tweetinfo.forEach(function (element, index) {
     if (element.id === Number(tweetid)) {
       res.send(element);
@@ -54,7 +57,15 @@ app.post("/tweetinfo", function (req, res) {
 
 //Posts searched tweets
 app.post("/searchinfo", function (req, res) {
-  //TODO: search a tweet
+  var searchedTweets = [];
+
+  tweetinfo.forEach(function (element, index) {
+    if (searchIDs.includes(element.id.toString())) {
+      searchedTweets.push(element);
+    }
+  });
+
+  res.send(searchedTweets);
 });
 
 //Update
