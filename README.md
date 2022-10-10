@@ -37,7 +37,7 @@ Click the 'Get Users' button to show all users.
 To update a username, enter the name of the deisred user followed by the screen name to change in the format "Name;NewScreenName" and click on 'Update User'.
 
 ## In the search section
-
+    
 Click the 'Recently Searched' button to show recently searched tweets.
 
 It will show the format of how the tweets will show up when searched for.
