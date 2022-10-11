@@ -1,3 +1,10 @@
+
+function test_print(){
+
+  console.log(“test code”);
+
+}
+
 $(function () {
   //Get users
   $("#get-button").on("click", function () {
